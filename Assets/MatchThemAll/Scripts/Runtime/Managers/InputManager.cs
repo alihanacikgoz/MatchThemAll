@@ -9,7 +9,8 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         [SerializeField] private LayerMask layerMask;
     
         private Camera _camera;
-        private RaycastHit _selectedItem;
+        private RaycastHit _targetItem;
+        private GameObject _selectedItem;
     
         void Start()
         {
@@ -18,26 +19,46 @@ namespace MatchThemAll.Scripts.Runtime.Managers
     
         void Update()
         {
-            if (Input.GetMouseButtonDown(0)) HandleClick();
+            if (Input.GetMouseButton(0))
+            {
+                HandleDrag();
+            } else if (Input.GetMouseButtonUp(0))
+            {
+                HandleMouseUp();
+            }
         }
 
-        private void HandleClick()
+        private void HandleDrag()
         {
             
             
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit,100,layerMask))
             {
-                _selectedItem = hit;
+                _targetItem = hit;
             }
-            Debug.Log("Clicked on : " + _selectedItem.collider.gameObject.name);
+            Debug.Log("Clicked on : " + _targetItem.collider.gameObject.name);
         
-            if(!_selectedItem.collider)return;
-            if (!_selectedItem.collider.TryGetComponent(out ItemController itemController)) return;
-
+            if(!_targetItem.collider)
+            {
+                _selectedItem = null;
+                return;
+            }
+            if (!_targetItem.collider.TryGetComponent(out ItemController itemController))
+            {
+                _selectedItem = null;
+                return;
+            }
             
+            _selectedItem = _targetItem.collider.gameObject;
             
-            InputSignals.onItemClicked?.Invoke(_selectedItem.collider.gameObject);
+        }
+        
+        private void HandleMouseUp()
+        {
+            if (!_selectedItem) return;
+            InputSignals.onItemClicked?.Invoke(_selectedItem);
+            _selectedItem = null;
         }
     }
 }
