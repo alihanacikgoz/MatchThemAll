@@ -51,7 +51,6 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             }
             
             _selectedItem = _targetItem.collider.gameObject;
-            
         }
         
         private void HandleMouseUp()

@@ -7,24 +7,13 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
 {
     public class ItemController : MonoBehaviour
     {
-
-        #region Variables
-
-        #region SerializeField Variables
-        
-        [Foldout("References"), SerializeField] private MeshRenderer meshRenderer;
-        
-        #endregion
-
-        #endregion
-
         #region Unity Methods
 
         private void OnEnable()
         {
             InputSignals.onItemClicked += OnItemClicked;
         }
-        
+
         private void OnDisable()
         {
             InputSignals.onItemClicked -= OnItemClicked;
@@ -36,21 +25,22 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
 
         private void OnItemClicked(GameObject item)
         {
-            DisableShadows();
-            DisablePhysics();
+            DisableShadows(item);
+            DisablePhysics(item);
         }
 
-        public void DisableShadows()
+        public void DisableShadows(GameObject item)
         {
+            if (!item) return;
+            var meshRenderer = item.GetComponentInChildren<MeshRenderer>();
+            if (!meshRenderer) return;
             meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         }
 
-        public void DisablePhysics()
+        public void DisablePhysics(GameObject item)
         {
-            if (TryGetComponent(out Rigidbody rb))
-            {
+            if (item.TryGetComponent(out Rigidbody rb))
                 rb.isKinematic = true;
-            }
         }
 
         public void SetTransform(Vector3 position, Vector3 scale)
@@ -60,6 +50,5 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
         }
 
         #endregion
-        
     }
 }
