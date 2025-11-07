@@ -858,7 +858,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bc14de3f91422892530d3434be1a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MatchThemAll.Scripts.Runtime.Controllers.ItemController
-  meshRenderer: {fileID: 1137349299}
+  _baseMaterial: {fileID: 0}
+  _outlineMaterial: {fileID: 0}
+  _renderer: {fileID: 0}
 --- !u!1001 &1355102189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1309,6 +1311,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sphere
       objectReference: {fileID: 0}
+    - target: {fileID: 945353900793737811, guid: def1335dfe5634de19c633751d3bcf09, type: 3}
+      propertyPath: m_TagString
+      value: Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133116059869089305, guid: def1335dfe5634de19c633751d3bcf09, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133116059869089305, guid: def1335dfe5634de19c633751d3bcf09, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+    - target: {fileID: 7133116059869089305, guid: def1335dfe5634de19c633751d3bcf09, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 072c8bfc03dc44b1cb83c6f91e5e0c99, type: 2}
     - target: {fileID: 7906561526648067908, guid: def1335dfe5634de19c633751d3bcf09, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.68

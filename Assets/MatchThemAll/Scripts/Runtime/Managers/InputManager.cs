@@ -30,25 +30,34 @@ namespace MatchThemAll.Scripts.Runtime.Managers
 
         private void HandleDrag()
         {
-            
-            
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit,100,layerMask))
             {
                 _targetItem = hit;
             }
-            Debug.Log("Clicked on : " + _targetItem.collider.gameObject.name);
-        
+            
+            _targetItem.collider.TryGetComponent(out ItemController itemController);
+            Debug.Log($"Selected item : {_targetItem.collider.gameObject.name}");
+            
             if(!_targetItem.collider)
             {
+                if (_selectedItem)
+                {
+                    itemController.OnItemDeselected();
+                }
                 _selectedItem = null;
                 return;
             }
-            if (!_targetItem.collider.TryGetComponent(out ItemController itemController))
+            if (!itemController)
             {
+                if (!_selectedItem) return;
+                _selectedItem.TryGetComponent(out ItemController selectedItemController);
+                selectedItemController.OnItemDeselected();
                 _selectedItem = null;
                 return;
             }
+            
+            itemController.OnItemSelected();
             
             _selectedItem = _targetItem.collider.gameObject;
         }
@@ -57,6 +66,8 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         {
             if (!_selectedItem) return;
             InputSignals.onItemClicked?.Invoke(_selectedItem);
+            _selectedItem.TryGetComponent(out ItemController itemController);
+            itemController.OnItemDeselected();
             _selectedItem = null;
         }
     }

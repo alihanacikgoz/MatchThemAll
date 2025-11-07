@@ -7,7 +7,21 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
 {
     public class ItemController : MonoBehaviour
     {
+        #region Variables
+
+        [Foldout("References"), SerializeField] private Material _baseMaterial;
+        [Foldout("References"), SerializeField] private Material _outlineMaterial;
+        [Foldout("References"), SerializeField] private Renderer _renderer;
+        
+        #endregion
+        
         #region Unity Methods
+
+        private void Awake()
+        {
+            _baseMaterial = _renderer.material;
+            _renderer.materials = new Material[] {_baseMaterial};
+        }
 
         private void OnEnable()
         {
@@ -48,7 +62,16 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
             transform.localPosition = position;
             transform.localScale = scale;
         }
-
+        
+        public void OnItemSelected()
+        {
+            _renderer.materials = new Material[] {_baseMaterial, _outlineMaterial };
+        }
+        
+        public void OnItemDeselected()
+        {
+            _renderer.materials = new Material[] {_baseMaterial };
+        }
         #endregion
     }
 }

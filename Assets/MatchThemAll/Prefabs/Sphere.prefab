@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6033092249294583133}
   m_Layer: 6
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,7 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bc14de3f91422892530d3434be1a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MatchThemAll.Scripts.Runtime.Controllers.ItemController
-  meshRenderer: {fileID: 7133116059869089305}
+  _baseMaterial: {fileID: 0}
+  _outlineMaterial: {fileID: 2100000, guid: 072c8bfc03dc44b1cb83c6f91e5e0c99, type: 2}
+  _renderer: {fileID: 7133116059869089305}
 --- !u!1 &5253412177447520091
 GameObject:
   m_ObjectHideFlags: 0
