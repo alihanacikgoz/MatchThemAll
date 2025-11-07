@@ -37,31 +37,33 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             }
             
             _targetItem.collider.TryGetComponent(out ItemController itemController);
-            Debug.Log($"Selected item : {_targetItem.collider.gameObject.name}");
+            //Debug.Log($"Selected item : {_targetItem.collider.gameObject.name}");
             
             if(!_targetItem.collider)
             {
-                if (_selectedItem)
-                {
-                    itemController.OnItemDeselected();
-                }
-                _selectedItem = null;
+                DeselectItem();
                 return;
             }
             if (!itemController)
             {
-                if (!_selectedItem) return;
-                _selectedItem.TryGetComponent(out ItemController selectedItemController);
-                selectedItemController.OnItemDeselected();
-                _selectedItem = null;
+                DeselectItem();
                 return;
             }
+            DeselectItem();
             
             itemController.OnItemSelected();
             
             _selectedItem = _targetItem.collider.gameObject;
         }
-        
+
+        private void DeselectItem()
+        {
+            if (!_selectedItem) return;
+            _selectedItem.TryGetComponent(out ItemController selectedItemController);
+            selectedItemController.OnItemDeselected();
+            _selectedItem = null;
+        }
+
         private void HandleMouseUp()
         {
             if (!_selectedItem) return;
