@@ -55,6 +55,8 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
         {
             if (item.TryGetComponent(out Rigidbody rb))
                 rb.isKinematic = true;
+            if (item.TryGetComponent(out Collider colliderComponent))
+                colliderComponent.enabled = false;
         }
 
         public void SetTransform(Vector3 position, Vector3 scale)
