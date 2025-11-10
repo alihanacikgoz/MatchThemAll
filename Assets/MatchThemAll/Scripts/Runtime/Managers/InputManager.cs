@@ -67,9 +67,9 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         private void HandleMouseUp()
         {
             if (!_selectedItem) return;
-            InputSignals.onItemClicked?.Invoke(_selectedItem);
             _selectedItem.TryGetComponent(out ItemController itemController);
             itemController.OnItemDeselected();
+            InputSignals.onItemClicked?.Invoke(_selectedItem);
             _selectedItem = null;
         }
     }

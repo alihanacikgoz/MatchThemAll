@@ -40,7 +40,6 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
         private void OnItemClicked(GameObject item)
         {
             DisableShadows(item);
-            DisablePhysics(item);
         }
 
         public void DisableShadows(GameObject item)
@@ -49,12 +48,17 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
             var meshRenderer = item.GetComponentInChildren<MeshRenderer>();
             if (!meshRenderer) return;
             meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            DisablePhysics(item);
         }
 
         public void DisablePhysics(GameObject item)
         {
             if (item.TryGetComponent(out Rigidbody rb))
                 rb.isKinematic = true;
+            if (item.TryGetComponent(out Collider collider))
+            {
+                collider.enabled = false;
+            }
         }
 
         public void SetTransform(Vector3 position, Vector3 scale)
