@@ -1,8 +1,9 @@
-using System;
+using System.Collections.Generic;
 using MatchThemAll.Scripts.Runtime.Controllers;
 using MatchThemAll.Scripts.Runtime.Signals;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace MatchThemAll.Scripts.Runtime.Managers
 {
@@ -12,7 +13,23 @@ namespace MatchThemAll.Scripts.Runtime.Managers
 
         #region SerializeField Variables
 
-        [Foldout("Elements"), SerializeField] private Transform[] itemSpots;
+        [Foldout("Elements"), SerializeField] private List<GameObject> itemSpots = new List<GameObject>();
+        
+        [Foldout("References"), SerializeField] private GameObject itemSpotPrefab;
+        [Foldout("References"), SerializeField] private Transform parent;
+        
+        [Foldout("Settings"), SerializeField] private Vector3 initiationPosition;
+        [Foldout("Settings"), SerializeField] private float scaleMultiplier;
+        [Foldout("Settings"), SerializeField] private float positionXMultiplier;
+
+        #endregion
+
+        #region Private Variables
+
+        private IObjectPool<GameObject> _itemPool;
+        private int _defaultCapacity;
+        private int _maxSize;
+        private int _difficulty;
 
         #endregion
 
@@ -20,7 +37,7 @@ namespace MatchThemAll.Scripts.Runtime.Managers
 
         #region Singleton
 
-        public static ItemSpotsManager Instance;
+        public static ItemSpotsManager Instance { get; private set; }
 
         private void Awake()
         {
@@ -31,6 +48,9 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             }
 
             Instance = this;
+            SetDefaults();
+            PoolInit(_defaultCapacity, _maxSize);
+            CreatePool();
         }
 
         #endregion
@@ -48,13 +68,102 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         }
 
         #endregion
+        
+        #region Pool Methods
+        
+        private void SetDefaults()
+        {
+            _difficulty = PlayerPrefs.GetInt("Difficulty");
+            Debug.Log(_difficulty);
+            switch (_difficulty)
+            {
+                case 0 :
+                    _defaultCapacity = 7;
+                    _maxSize = 10;
+                    positionXMultiplier = 0.0975f;
+                    scaleMultiplier = 0.65f;
+                    break;
+                case 1 :
+                    _defaultCapacity = 6;
+                    _maxSize = 8;
+                    positionXMultiplier = 0.115f;
+                    scaleMultiplier = 0.75f;
+                    break;
+                case 2 :
+                    _defaultCapacity = 5;
+                    _maxSize = 6;
+                    positionXMultiplier = 0.15f;
+                    scaleMultiplier = 1f;
+                    break;
+                default:
+                    _defaultCapacity = 4;
+                    _maxSize = 4;
+                    positionXMultiplier = 0.20f;
+                    scaleMultiplier = 1.25f;
+                    break;
+            }
+        }
+
+        private void PoolInit(int defaultCapacity, int maxSize)
+        {
+            _itemPool = new ObjectPool<GameObject>(
+                createFunc: CreateItem,
+                actionOnGet: OnGet,
+                actionOnRelease: OnRelease,
+                actionOnDestroy: OnDestroyItem,
+                collectionCheck: true,
+                defaultCapacity: defaultCapacity,
+                maxSize: maxSize
+            );
+        }
+
+        private GameObject CreateItem()
+        {
+            GameObject item = Instantiate(itemSpotPrefab);
+            item.name = "ItemSpot";
+            item.SetActive(false);
+            return item;
+        }
+        
+        private void OnGet(GameObject gameObject)
+        {
+            gameObject.SetActive(true);
+        }
+        
+        private void OnRelease(GameObject gameObject)
+        {
+            gameObject.SetActive(false);
+        }
+
+        private void OnDestroyItem(GameObject gameObject)
+        {
+            Destroy(gameObject);
+        }
+        
+        private void CreatePool()
+        {
+            float positionX = 0;
+            for (int i = 0; i < _defaultCapacity; i++)
+            {
+                GameObject item = _itemPool.Get();
+                item.transform.SetParent(parent);
+                item.transform.localPosition = new Vector3(initiationPosition.x + positionX, initiationPosition.y, initiationPosition.z);
+                item.transform.localRotation = Quaternion.Euler(Vector3.zero); 
+                item.transform.localRotation = Quaternion.Euler(new Vector3(-6f,0f,0f));
+                item.transform.localScale = Vector3.one * scaleMultiplier;
+                itemSpots.Add(item);
+                positionX += positionXMultiplier;
+            }
+        }
+
+        #endregion
 
         #region Custom Methods
 
         private void OnItemClicked(GameObject item)
         {
             // 1. Turn the item as a child of the item spot
-            for (int i = 0; i < itemSpots.Length; i++)
+            for (int i = 0; i < itemSpots.Count; i++)
             {
                 if (itemSpots[i].TryGetComponent(out ItemSpotController itemSpotController))
                 {

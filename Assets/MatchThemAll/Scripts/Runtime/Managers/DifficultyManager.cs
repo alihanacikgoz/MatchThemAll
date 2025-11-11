@@ -8,15 +8,6 @@ namespace MatchThemAll.Scripts.Runtime.Managers
 {
     public class DifficultyManager : MonoBehaviour
     {
-        #region Variables
-
-        #region SerializeField Variables
-
-        [Foldout("Settings"), SerializeField] private Difficulty difficulty;
-
-        #endregion
-
-        #endregion
         
         #region Singleton
 
@@ -35,15 +26,26 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         }
 
         #endregion
-
-        private DifficultyManager()
+        
+        [Button]
+        public void SetDifficultyEasy()
         {
-            SetDifficulty();
+            Difficulty diff = Difficulty.Easy;
+            DifficultySignals.onDifficultyChanged?.Invoke(diff);
         }
         
-        public void SetDifficulty()
+        [Button]
+        public void SetDifficultyMedium()
         {
-            DifficultySignals.onDifficultyChanged?.Invoke(difficulty);
+            Difficulty diff = Difficulty.Medium;
+            DifficultySignals.onDifficultyChanged?.Invoke(diff);
+        }
+        
+        [Button]
+        public void SetDifficultyHard()
+        {
+            Difficulty diff = Difficulty.Hard;
+            DifficultySignals.onDifficultyChanged?.Invoke(diff);
         }
         
         
