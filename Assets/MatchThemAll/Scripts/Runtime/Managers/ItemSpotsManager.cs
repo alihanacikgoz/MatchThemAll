@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MatchThemAll.Scripts.Runtime.Controllers;
 using MatchThemAll.Scripts.Runtime.Signals;
 using NaughtyAttributes;
@@ -163,7 +164,7 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         private void OnItemClicked(GameObject item)
         {
             // 1. Turn the item as a child of the item spot
-            for (int i = 0; i < itemSpots.Count; i++)
+            for (int i = 0; i < itemSpots.Count(); i++)
             {
                 if (itemSpots[i].TryGetComponent(out ItemSpotController itemSpotController))
                 {
@@ -179,7 +180,17 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             // 2. Scale the item down, set its local position 0,0,0
             if (item.TryGetComponent(out ItemController itemController))
             {
-                itemController.SetTransform(new Vector3(0f, 0.08f, 0f), Vector3.one * 0.13f);
+                float multiplier = 1f;
+                switch (itemController.transform.tag)
+                {
+                    case "RedAmber":
+                        multiplier = 0.10f;
+                        break;
+                    case "MysticLog":
+                        multiplier = 0.13f;
+                        break;
+                }
+                itemController.SetTransform(new Vector3(0f, 0.08f, 0f), Vector3.one * multiplier);
             }
         }
 

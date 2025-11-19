@@ -9,9 +9,9 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
     {
         #region Variables
 
-        [Foldout("References"), SerializeField] private Material _baseMaterial;
-        [Foldout("References"), SerializeField] private Material _outlineMaterial;
-        [Foldout("References"), SerializeField] private Renderer _renderer;
+        [Foldout("References"), SerializeField] private Material baseMaterial;
+        [Foldout("References"), SerializeField] private Material outlineMaterial;
+        [Foldout("References"), SerializeField] private Renderer rendererComp;
         
         #endregion
         
@@ -19,8 +19,8 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
 
         private void Awake()
         {
-            _baseMaterial = _renderer.material;
-            _renderer.materials = new Material[] {_baseMaterial};
+            baseMaterial = rendererComp.material;
+            rendererComp.materials = new Material[] {baseMaterial};
         }
 
         private void OnEnable()
@@ -43,7 +43,7 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
             DisablePhysics(item);
         }
 
-        public void DisableShadows(GameObject item)
+        private void DisableShadows(GameObject item)
         {
             if (!item) return;
             var meshRenderer = item.GetComponentInChildren<MeshRenderer>();
@@ -51,7 +51,7 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
             meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         }
 
-        public void DisablePhysics(GameObject item)
+        private void DisablePhysics(GameObject item)
         {
             if (item.TryGetComponent(out Rigidbody rb))
                 rb.isKinematic = true;
@@ -67,12 +67,12 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
         
         public void OnItemSelected()
         {
-            _renderer.materials = new Material[] {_baseMaterial, _outlineMaterial };
+            rendererComp.materials = new Material[] {baseMaterial, outlineMaterial };
         }
         
         public void OnItemDeselected()
         {
-            _renderer.materials = new Material[] {_baseMaterial };
+            rendererComp.materials = new Material[] {baseMaterial };
         }
         #endregion
     }

@@ -56,7 +56,6 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         #endregion
@@ -80,8 +79,7 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         }
 
         #endregion
-
-
+        
         #region Custom Methods
 
         private Vector3 ScreenToWorldPointOnGround(Vector3 screenPoint, float groundY)
@@ -108,8 +106,6 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             _bottomRightWorld = ScreenToWorldPointOnGround(new Vector3(Screen.width, 0, 0), groundY);
             _topLeftWorld = ScreenToWorldPointOnGround(new Vector3(0, Screen.height, 0), groundY);
             _topRightWorld = ScreenToWorldPointOnGround(new Vector3(Screen.width, Screen.height, 0), groundY);
-
-            
         }
 
         private void SetBoundaryWallPosition()
@@ -146,20 +142,13 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             position.y = groundY + (height / 2f);
             wall.transform.position = position;
 
-            BoxCollider collider = wall.GetComponent<BoxCollider>();
-            if (collider == null)
+            BoxCollider boxCollider = wall.GetComponent<BoxCollider>();
+            if (boxCollider == null)
             {
-                collider = wall.AddComponent<BoxCollider>();
+                boxCollider = wall.AddComponent<BoxCollider>();
             }
 
-            collider.size = new Vector3(width, height, depth);
-        }
-
-        [Button("Recalculate Boundaries")]
-        public void RecalculateBoundaries()
-        {
-            CalculateScreenBoundaries();
-            SetBoundaryWallPosition();
+            boxCollider.size = new Vector3(width, height, depth);
         }
 
         #endregion
