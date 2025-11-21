@@ -216,9 +216,10 @@ MonoBehaviour:
   - {fileID: 184562960}
   - {fileID: 1907020701}
   - {fileID: 151733344}
+  - {fileID: 863826885}
   distanceMultiplier: 0
   wallThickness: 1
-  wallHeight: 5
+  wallHeight: 30
   autoSetup: 1
 --- !u!4 &308383976
 Transform:
@@ -623,6 +624,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736b05ec10f4a40ed813138889964a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MatchThemAll.Scripts.Runtime.Managers.PoolManager
+--- !u!1 &863826885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 863826886}
+  m_Layer: 0
+  m_Name: TopCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &863826886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863826885}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1503019874}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1020433255
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,6 +769,7 @@ Transform:
   - {fileID: 184562961}
   - {fileID: 1907020702}
   - {fileID: 151733345}
+  - {fileID: 863826886}
   m_Father: {fileID: 330585546}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1573882537
@@ -833,7 +866,8 @@ MonoBehaviour:
   itemPrefabs:
   - {fileID: 945353900793737811, guid: def1335dfe5634de19c633751d3bcf09, type: 3}
   - {fileID: 1334816261991525843, guid: 0cd8ab847f7524f558b39422b5f9f2d1, type: 3}
-  defaultCapacity: 10
+  - {fileID: 5083914108471197152, guid: b9314e75215f6400999ad6ccc84f600e, type: 3}
+  defaultCapacity: 30
   maxCapacity: 50
   poolName: ItemPool
 --- !u!4 &1719617641
@@ -845,7 +879,7 @@ Transform:
   m_GameObject: {fileID: 1719617639}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.81206, y: 1.37695, z: 1.69158}
+  m_LocalPosition: {x: 0, y: 1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

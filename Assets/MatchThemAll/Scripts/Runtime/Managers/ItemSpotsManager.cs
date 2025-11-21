@@ -126,19 +126,19 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             return item;
         }
         
-        private void OnGet(GameObject gameObject)
+        private void OnGet(GameObject go)
         {
-            gameObject.SetActive(true);
+            go.SetActive(true);
         }
         
-        private void OnRelease(GameObject gameObject)
+        private void OnRelease(GameObject go)
         {
-            gameObject.SetActive(false);
+            go.SetActive(false);
         }
 
-        private void OnDestroyItem(GameObject gameObject)
+        private void OnDestroyItem(GameObject go)
         {
-            Destroy(gameObject);
+            Destroy(go);
         }
         
         private void CreatePool()
@@ -187,6 +187,9 @@ namespace MatchThemAll.Scripts.Runtime.Managers
                         multiplier = 0.10f;
                         break;
                     case "MysticLog":
+                        multiplier = 0.13f;
+                        break;
+                    case "RuneStone":
                         multiplier = 0.13f;
                         break;
                 }

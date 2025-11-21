@@ -37,7 +37,7 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             }
             
             _targetItem.collider.TryGetComponent(out ItemController itemController);
-            //Debug.Log($"Selected item : {_targetItem.collider.gameObject.name}");
+            
             
             if(!_targetItem.collider)
             {

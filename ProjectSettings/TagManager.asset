@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - RedAmber
   - MysticLog
+  - RuneStone
   layers:
   - Default
   - TransparentFX
