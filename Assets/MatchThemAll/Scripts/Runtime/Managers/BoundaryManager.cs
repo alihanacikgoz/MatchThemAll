@@ -122,7 +122,7 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             GameObject bottomWall = boundaryWalls[1];
             Vector3 bottomCenter = (_bottomLeftWorld + _bottomRightWorld) / 2f;
             float bottomWidth = Vector3.Distance(_bottomLeftWorld, _bottomRightWorld);
-            SetupWall(bottomWall, bottomCenter, bottomWidth, wallThickness, wallHeight, groundY,1.2f);
+            SetupWall(bottomWall, bottomCenter, bottomWidth, wallThickness, wallHeight, groundY,1.3f);
 
             GameObject leftWall = boundaryWalls[2];
             Vector3 leftCenter = (_topLeftWorld + _bottomLeftWorld) / 2f;
@@ -162,7 +162,9 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         private void SetupCeiling(GameObject ceiling, Vector3 position, float width, float depth, float height)
         {
             if (!ceiling) return;
-
+            
+            ceiling.transform.position = position;
+            
             ceiling.TryGetComponent(out BoxCollider boxCollider);
             if (boxCollider == null)
             {
