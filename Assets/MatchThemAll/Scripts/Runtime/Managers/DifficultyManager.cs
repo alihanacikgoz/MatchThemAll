@@ -8,7 +8,6 @@ namespace MatchThemAll.Scripts.Runtime.Managers
 {
     public class DifficultyManager : MonoBehaviour
     {
-        
         #region Singleton
 
         public static DifficultyManager Instance { get; private set; }
@@ -18,36 +17,18 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             if (Instance != null && Instance != this)
             {
                 Destroy(this.gameObject);
+                return;
             }
-            else
-            {
-                Instance = this;
-            }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
         #endregion
-        
-        [Button]
-        public void SetDifficultyEasy()
+
+        public void SetDifficulty(Difficulty diff)
         {
-            Difficulty diff = Difficulty.Easy;
             DifficultySignals.onDifficultyChanged?.Invoke(diff);
         }
-        
-        [Button]
-        public void SetDifficultyMedium()
-        {
-            Difficulty diff = Difficulty.Medium;
-            DifficultySignals.onDifficultyChanged?.Invoke(diff);
-        }
-        
-        [Button]
-        public void SetDifficultyHard()
-        {
-            Difficulty diff = Difficulty.Hard;
-            DifficultySignals.onDifficultyChanged?.Invoke(diff);
-        }
-        
-        
     }
 }

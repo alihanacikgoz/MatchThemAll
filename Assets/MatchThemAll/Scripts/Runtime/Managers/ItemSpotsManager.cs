@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using MatchThemAll.Scripts.Runtime.Controllers;
+using MatchThemAll.Scripts.Runtime.Data;
 using MatchThemAll.Scripts.Runtime.Signals;
 using NaughtyAttributes;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -49,9 +51,9 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             }
 
             Instance = this;
-            SetDefaults();
-            PoolInit(_defaultCapacity, _maxSize);
-            CreatePool();
+            //SetDefaults();
+            //PoolInit(_defaultCapacity, _maxSize);
+            //CreatePool();
         }
 
         #endregion
@@ -61,11 +63,13 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         private void OnEnable()
         {
             InputSignals.onItemClicked += OnItemClicked;
+            LevelSignals.onLevelInitialize += OnLevelInitialize;
         }
 
         private void OnDisable()
         {
             InputSignals.onItemClicked -= OnItemClicked;
+            LevelSignals.onLevelInitialize -= OnLevelInitialize;
         }
 
         #endregion
@@ -160,6 +164,15 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         #endregion
 
         #region Custom Methods
+        
+        private void OnLevelInitialize(LevelData levelData)
+        {
+            int itemsToCreate = levelData.itemsToMatchCount;
+            int itemsToMax = levelData.itemsToMaxCount;
+            SetDefaults();
+            PoolInit(itemsToCreate, itemsToMax);
+            CreatePool();
+        }
 
         private void OnItemClicked(GameObject item)
         {

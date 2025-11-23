@@ -43,6 +43,7 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         private void OnDifficultyChanged(Difficulty difficulty)
         {
             PlayerPrefs.SetInt("Difficulty", (int) difficulty);
+            Debug.Log($"Difficulty index = "+(int) difficulty);
         }
     }
 }

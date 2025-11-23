@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using MatchThemAll.Scripts.Runtime.Data;
+using MatchThemAll.Scripts.Runtime.Enums;
 using MatchThemAll.Scripts.Runtime.Managers;
 using NaughtyAttributes;
 using UnityEngine;
@@ -25,8 +27,7 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
         }
 
         #endregion
-
-
+        
         #region Variables
 
         #region SerializeField Variables
@@ -34,13 +35,28 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
         [Foldout("References"), SerializeField]
         private List<GameObject> itemPrefabs = new List<GameObject>();
 
+        [Foldout("Settings"), SerializeField] private Difficulty difficulty;
         [Foldout("Settings"), SerializeField] private int defaultCapacity = 10;
         [Foldout("Settings"), SerializeField] private int maxCapacity = 50;
         [Foldout("Settings"), SerializeField] private string poolName = "ItemPool";
+        [Foldout("Settings"), SerializeField] private float initialSize;
 
         #endregion
 
         #endregion
+
+        private void OnEnable()
+        {
+            LevelVariableRegulator();
+        }
+
+        private void LevelVariableRegulator()
+        {
+            LevelData levelData = LevelManager.Instance.GetCurrentLevel();
+            difficulty = levelData.levelDifficulty;
+            defaultCapacity = levelData.itemsToMatchCount;
+            maxCapacity = levelData.itemsToMaxCount;
+        }
 
         private void Start()
         {
@@ -55,6 +71,14 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
                 {
                     var poolId = $"{poolName}_{item.name}";
                     var poolItem = PoolManager.Instance.CreateItems(poolId, true);
+                    if (poolItem.transform.gameObject.CompareTag("RedAmber"))
+                    {
+                        poolItem.transform.localScale = Vector3.one * (initialSize - 0.2f);
+                    }
+                    else
+                    {
+                        poolItem.transform.localScale = Vector3.one * initialSize;
+                    }
                     poolItem.transform.SetParent(transform);
                 }
             }

@@ -117,37 +117,35 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             GameObject topWall = boundaryWalls[0];
             Vector3 topCenter = (_topLeftWorld + _topRightWorld) / 2f;
             float topWidth = Vector3.Distance(_topLeftWorld, _topRightWorld);
-            SetupWall(topWall, topCenter, topWidth, wallThickness, wallHeight, groundY, -1);
+            SetupWall(topWall, topCenter, topWidth, wallThickness, wallHeight, groundY, -1.4f);
 
             GameObject bottomWall = boundaryWalls[1];
             Vector3 bottomCenter = (_bottomLeftWorld + _bottomRightWorld) / 2f;
             float bottomWidth = Vector3.Distance(_bottomLeftWorld, _bottomRightWorld);
-            SetupWall(bottomWall, bottomCenter, bottomWidth, wallThickness, wallHeight, groundY,1.3f);
+            SetupWall(bottomWall, bottomCenter, bottomWidth, wallThickness, wallHeight, groundY,1.4f);
 
             GameObject leftWall = boundaryWalls[2];
             Vector3 leftCenter = (_topLeftWorld + _bottomLeftWorld) / 2f;
             float leftHeight = Vector3.Distance(_topLeftWorld, _bottomLeftWorld);
-            SetupWall(leftWall, leftCenter, wallThickness, leftHeight, wallHeight, groundY);
+            SetupWall(leftWall, leftCenter, wallThickness, leftHeight, wallHeight, groundY,0,0.2f);
 
             GameObject rightWall = boundaryWalls[3];
             Vector3 rightCenter = (_topRightWorld + _bottomRightWorld) / 2f;
             float rightHeight = Vector3.Distance(_topRightWorld, _bottomRightWorld);
-            SetupWall(rightWall, rightCenter, wallThickness, rightHeight, wallHeight, groundY);
+            SetupWall(rightWall, rightCenter, wallThickness, rightHeight, wallHeight, groundY,0f,-0.2f);
 
             GameObject centerTopCeiling = boundaryWalls[4];
             Vector3 centerTopCenter = mainCamera.transform.position + Vector3.up * 3f;
-            //Vector3 centerTopCenter = ((topCenter + bottomCenter) / 2f + (leftCenter + rightCenter) / 2f);
-            //float height = mainCamera.transform.position.z + 3f;
             SetupCeiling(centerTopCeiling, centerTopCenter, 30f, 1f, 30f);
-            
         }
 
-        private void SetupWall(GameObject wall, Vector3 position, float width, float depth, float height, float groundY, float offset = 0f)
+        private void SetupWall(GameObject wall, Vector3 position, float width, float depth, float height, float groundY, float offsetForward = 0f, float offsetSides = 0f)
         {
             if (wall == null) return;
 
             position.y = groundY + (height / 2f);
-            position.z += offset;
+            position.z += offsetForward;
+            position.x += offsetSides;
             wall.transform.position = position;
 
             BoxCollider boxCollider = wall.GetComponent<BoxCollider>();
