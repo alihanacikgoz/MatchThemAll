@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2438d05f76c420eae1993f18f6d8dff, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: Assembly-CSharp::MatchThemAll.Scripts.Runtime.Data.LevelData
-  levelIndex: 0
+  levelIndex: 1
   levelDifficulty: 0
-  itemsToMatchCount: 0
-  itemsToMaxCount: 0
+  itemsToMatchCount: 15
+  itemsToMaxCount: 50
   timeLimitInSeconds: 0
   requiredScore: 0

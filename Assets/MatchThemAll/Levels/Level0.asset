@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MatchThemAll.Scripts.Runtime.Data.LevelData
   levelIndex: 0
   levelDifficulty: 0
-  itemsToMatchCount: 10
-  itemsToMaxCount: 50
+  itemsToMatchCount: 50
+  itemsToMaxCount: 60
   timeLimitInSeconds: 20
   requiredScore: 50

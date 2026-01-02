@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MatchThemAll.Scripts.Runtime.Managers.LevelManager
   levels:
   - {fileID: 11400000, guid: 167bff6bb28614d08b338c34b33b4f72, type: 2}
+  - {fileID: 11400000, guid: d03bda88d50bf4ea08cb152e0a0b9322, type: 2}
 --- !u!4 &23399948
 Transform:
   m_ObjectHideFlags: 0
@@ -478,14 +479,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -1001,6 +1002,7 @@ MonoBehaviour:
   - {fileID: 945353900793737811, guid: def1335dfe5634de19c633751d3bcf09, type: 3}
   - {fileID: 1334816261991525843, guid: 0cd8ab847f7524f558b39422b5f9f2d1, type: 3}
   - {fileID: 5083914108471197152, guid: b9314e75215f6400999ad6ccc84f600e, type: 3}
+  difficulty: 2
   defaultCapacity: 30
   maxCapacity: 50
   poolName: ItemPool
@@ -1108,6 +1110,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1905481901
 MeshFilter:
