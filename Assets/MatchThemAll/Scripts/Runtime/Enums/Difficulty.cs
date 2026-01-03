@@ -5,5 +5,6 @@ namespace MatchThemAll.Scripts.Runtime.Enums
         Easy,
         Medium,
         Hard,
+        Insane
     }
 }

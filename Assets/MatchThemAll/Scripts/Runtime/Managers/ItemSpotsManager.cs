@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using MatchThemAll.Scripts.Runtime.Controllers;
 using MatchThemAll.Scripts.Runtime.Data;
+using MatchThemAll.Scripts.Runtime.Enums;
 using MatchThemAll.Scripts.Runtime.Signals;
 using NaughtyAttributes;
+using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -33,6 +35,7 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         private int _defaultCapacity;
         private int _maxSize;
         private int _difficulty;
+       
 
         #endregion
 
@@ -100,7 +103,7 @@ namespace MatchThemAll.Scripts.Runtime.Managers
                     positionXMultiplier = 0.15f;
                     scaleMultiplier = 1f;
                     break;
-                default:
+                case 3 :
                     _defaultCapacity = 4;
                     _maxSize = 4;
                     positionXMultiplier = 0.20f;
@@ -193,17 +196,61 @@ namespace MatchThemAll.Scripts.Runtime.Managers
             // 2. Scale the item down, set its local position 0,0,0
             if (item.TryGetComponent(out ItemController itemController))
             {
+                Difficulty difficulty;
+                difficulty = (Difficulty) PlayerPrefs.GetInt("Difficulty");
                 float multiplier = 1f;
                 switch (itemController.transform.tag)
                 {
                     case "RedAmber":
-                        multiplier = 0.10f;
+                        switch (difficulty)
+                        {
+                            case Difficulty.Easy:
+                                multiplier = 0.07f;
+                                break;
+                            case Difficulty.Medium:
+                                multiplier = 0.06f;
+                                break;
+                            case Difficulty.Hard:
+                                multiplier = 0.05f;
+                                break;
+                            case Difficulty.Insane:
+                                multiplier = 0.04f;
+                                break;
+                        }
                         break;
                     case "MysticLog":
-                        multiplier = 0.13f;
+                        switch (difficulty)
+                        {
+                            case Difficulty.Easy:
+                                multiplier = 0.11f;
+                                break;
+                            case Difficulty.Medium:
+                                multiplier = 0.10f;
+                                break;
+                            case Difficulty.Hard:
+                                multiplier = 0.09f;
+                                break;
+                            case Difficulty.Insane:
+                                multiplier = 0.08f;
+                                break;
+                        }
                         break;
                     case "RuneStone":
-                        multiplier = 0.13f;
+                        switch (difficulty)
+                        {
+                            case Difficulty.Easy:
+                                multiplier = 0.09f;
+                                break;
+                            case Difficulty.Medium:
+                                multiplier = 0.08f;
+                                break;
+                            case Difficulty.Hard:
+                                multiplier = 0.07f;
+                                break;
+                            case Difficulty.Insane:
+                                multiplier = 0.06f;
+                                break;
+                        }
                         break;
                 }
                 itemController.SetTransform(new Vector3(0f, 0.08f, 0f), Vector3.one * multiplier);
