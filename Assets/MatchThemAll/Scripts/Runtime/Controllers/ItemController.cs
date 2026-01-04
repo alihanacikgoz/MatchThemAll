@@ -59,10 +59,11 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
                 colliderComponent.enabled = false;
         }
 
-        public void SetTransform(Vector3 position, Vector3 scale)
+        public void SetTransform(Vector3 position, Vector3 scale, Quaternion rotation)
         {
             transform.localPosition = position;
             transform.localScale = scale;
+            transform.localRotation = rotation;
         }
         
         public void OnItemSelected()

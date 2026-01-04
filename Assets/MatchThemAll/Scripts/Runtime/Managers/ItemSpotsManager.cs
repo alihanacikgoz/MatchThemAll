@@ -199,6 +199,7 @@ namespace MatchThemAll.Scripts.Runtime.Managers
                 Difficulty difficulty;
                 difficulty = (Difficulty) PlayerPrefs.GetInt("Difficulty");
                 float multiplier = 1f;
+                Vector3 rotation = Vector3.zero;
                 switch (itemController.transform.tag)
                 {
                     case "RedAmber":
@@ -217,6 +218,7 @@ namespace MatchThemAll.Scripts.Runtime.Managers
                                 multiplier = 0.04f;
                                 break;
                         }
+                        rotation = new Vector3(-90, 0, 0);
                         break;
                     case "MysticLog":
                         switch (difficulty)
@@ -234,6 +236,7 @@ namespace MatchThemAll.Scripts.Runtime.Managers
                                 multiplier = 0.08f;
                                 break;
                         }
+                        rotation = new Vector3(-150, 0, 0);
                         break;
                     case "RuneStone":
                         switch (difficulty)
@@ -251,12 +254,12 @@ namespace MatchThemAll.Scripts.Runtime.Managers
                                 multiplier = 0.06f;
                                 break;
                         }
+                        rotation = new Vector3(-90, 0, 0);
                         break;
                 }
-                itemController.SetTransform(new Vector3(0f, 0.08f, 0f), Vector3.one * multiplier);
+                itemController.SetTransform(new Vector3(0f, 0.08f, 0f), Vector3.one * multiplier, Quaternion.Euler(rotation));
             }
         }
-
         #endregion
     }
 }
