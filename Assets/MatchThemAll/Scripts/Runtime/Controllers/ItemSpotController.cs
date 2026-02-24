@@ -15,19 +15,10 @@ namespace MatchThemAll.Scripts.Runtime.Controllers
 
         #endregion
         
-        public void SetIsOccupied(bool occupation)
-        {
-            isOccupied = occupation;
-        }
+        public void SetIsOccupied(bool occupation) => isOccupied = occupation;
 
-        public bool GetIsOccupied()
-        {
-            return isOccupied;
-        }
+        public bool GetIsOccupied() => isOccupied;
 
-        public void SetAsParent(GameObject child)
-        {
-            child.transform.SetParent(transform);
-        }
+        public void SetAsParent(GameObject child) => child.transform.SetParent(transform);
     }
 }

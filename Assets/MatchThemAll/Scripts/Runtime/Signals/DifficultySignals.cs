@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace MatchThemAll.Scripts.Runtime.Signals
 {
-    public class DifficultySignals
+    public static class DifficultySignals
     {
         public static UnityAction<Difficulty> onDifficultyChanged;
     }

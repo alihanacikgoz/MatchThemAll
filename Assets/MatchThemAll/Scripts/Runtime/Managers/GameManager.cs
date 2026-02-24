@@ -30,11 +30,15 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         private void OnEnable()
         {
             DifficultySignals.onDifficultyChanged += OnDifficultyChanged;
+
+            LevelSignals.onLevelFailed += OnLevelFailed;
         }
 
         private void OnDisable()
         {
             DifficultySignals.onDifficultyChanged -= OnDifficultyChanged;
+            
+            LevelSignals.onLevelFailed -= OnLevelFailed;
         }
 
         #endregion
@@ -44,6 +48,11 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         {
             PlayerPrefs.SetInt("Difficulty", (int) difficulty);
             Debug.Log($"Difficulty index = "+(int) difficulty);
+        }
+        
+        private void OnLevelFailed()
+        {
+            
         }
     }
 }

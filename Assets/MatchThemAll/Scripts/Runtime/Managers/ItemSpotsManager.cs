@@ -5,8 +5,6 @@ using MatchThemAll.Scripts.Runtime.Data;
 using MatchThemAll.Scripts.Runtime.Enums;
 using MatchThemAll.Scripts.Runtime.Signals;
 using NaughtyAttributes;
-using NUnit.Framework;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -179,21 +177,21 @@ namespace MatchThemAll.Scripts.Runtime.Managers
 
         private void OnItemClicked(GameObject item)
         {
-            // 1. Turn the item as a child of the item spot
-            for (int i = 0; i < itemSpots.Count(); i++)
-            {
-                if (itemSpots[i].TryGetComponent(out ItemSpotController itemSpotController))
-                {
-                    if (!itemSpotController.GetIsOccupied())
-                    {
-                        itemSpotController.SetAsParent(item);
-                        itemSpotController.SetIsOccupied(true);
-                        break;
-                    }
-                }
-            }
+            ItemSpotController itemSpotController = GetAvailableSpot();
 
-            // 2. Scale the item down, set its local position 0,0,0
+            if (!itemSpotController)
+            {
+                Debug.LogWarning($"Spot is not available");
+                if (IsAllSpotsOccupied())
+                {
+                    Debug.Log($"Game Over!");
+                    LevelSignals.onLevelFailed?.Invoke();
+                }
+                return;
+            }
+            itemSpotController.SetAsParent(item);
+            itemSpotController.SetIsOccupied(true);
+            
             if (item.TryGetComponent(out ItemController itemController))
             {
                 Difficulty difficulty;
@@ -259,6 +257,34 @@ namespace MatchThemAll.Scripts.Runtime.Managers
                 }
                 itemController.SetTransform(new Vector3(0f, 0.08f, 0f), Vector3.one * multiplier, Quaternion.Euler(rotation));
             }
+        }
+
+        private ItemSpotController GetAvailableSpot()
+        {
+            for (int i = 0; i < itemSpots.Count(); i++)
+            {
+                if (itemSpots[i].TryGetComponent(out ItemSpotController itemSpotController))
+                {
+                    if (!itemSpotController.isOccupied)
+                        return itemSpotController;
+                }
+            }
+            return null;
+        }
+
+        private bool IsAllSpotsOccupied()
+        {
+            for (int i = 0; i < itemSpots.Count(); i++)
+            {
+                if (itemSpots[i].TryGetComponent(out ItemSpotController itemSpotController))
+                {
+                    if (itemSpotController.isOccupied == false)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
         #endregion
     }

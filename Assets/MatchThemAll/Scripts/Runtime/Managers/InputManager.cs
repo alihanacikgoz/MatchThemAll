@@ -1,6 +1,10 @@
 using MatchThemAll.Scripts.Runtime.Controllers;
 using MatchThemAll.Scripts.Runtime.Signals;
 using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using TouchPhase = UnityEngine.InputSystem.TouchPhase;
+
 
 namespace MatchThemAll.Scripts.Runtime.Managers
 {
@@ -11,7 +15,29 @@ namespace MatchThemAll.Scripts.Runtime.Managers
         private Camera _camera;
         private RaycastHit _targetItem;
         private GameObject _selectedItem;
-    
+        
+        #region Subscriber Methods
+
+        private void Subscribers()
+        {
+            EnhancedTouchSupport.Enable();
+        }
+        
+        private void Unsubscribers()
+        {
+            EnhancedTouchSupport.Disable();
+        }
+
+        #endregion
+        
+
+        #region Unity Methods
+        
+        private void OnEnable()
+        {
+            Subscribers();
+        }
+
         void Start()
         {
             _camera = Camera.main;
@@ -19,18 +45,27 @@ namespace MatchThemAll.Scripts.Runtime.Managers
     
         void Update()
         {
-            if (Input.GetMouseButton(0))
+            if (Touch.activeTouches[0].inProgress)
             {
                 HandleDrag();
-            } else if (Input.GetMouseButtonUp(0))
+            } else if (Touch.activeTouches[0].phase == TouchPhase.Ended || Touch.activeTouches[0].phase == TouchPhase.Canceled)
             {
                 HandleMouseUp();
             }
         }
+        
+        private void OnDisable()
+        {
+            Unsubscribers();
+        }
+
+        #endregion
+
+        
 
         private void HandleDrag()
         {
-            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _camera.ScreenPointToRay(Touch.activeFingers[0].screenPosition);
             if (Physics.Raycast(ray, out RaycastHit hit,100,layerMask))
             {
                 _targetItem = hit;
